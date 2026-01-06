@@ -1,0 +1,4 @@
+{"location":"routes/contacts.ts:POST-entry","message":"POST handler called","data":{"body":{"name":"System Test","phone":"055-5555555"},"headers":"application/json"},"timestamp":1767717728825,"sessionId":"debug-session","runId":"run2","hypothesisId":"POST-A"}
+{"location":"routes/contacts.ts:POST-validated","message":"Validation passed","data":{"validated":{"name":"System Test","phone":"055-5555555"}},"timestamp":1767717728825,"sessionId":"debug-session","runId":"run2","hypothesisId":"POST-B"}
+{"location":"routes/contacts.ts:POST-beforeCreate","message":"About to create contact","data":{"name":"System Test","phone":"055-5555555","email":null},"timestamp":1767717728825,"sessionId":"debug-session","runId":"run2","hypothesisId":"POST-C"}
+{"location":"routes/contacts.ts:POST-afterCreate","message":"Contact created","data":{"contactId":"6484b20f-72d6-461d-94c2-38ee949ec5ab"},"timestamp":1767717728827,"sessionId":"debug-session","runId":"run2","hypothesisId":"POST-D"}

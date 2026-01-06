@@ -127,7 +127,7 @@ router.delete('/:id', async (req: Request, res: Response, next: NextFunction) =>
       where: { id },
     });
 
-    res.status(200).send();
+    res.status(204).send();
   } catch (error) {
     next(error);
   }

@@ -121,3 +121,86 @@ The system SHALL handle API errors gracefully.
 - **THEN** error message SHALL be displayed
 - **AND** modal SHALL close
 
+### Requirement: Modern Visual Design
+The system SHALL provide a modern, clean, and visually appealing user interface.
+
+#### Scenario: Color Scheme
+- **WHEN** user views the application
+- **THEN** the interface SHALL use a modern color palette with:
+  - Primary action color: Blue (#3B82F6 or similar)
+  - Neutral backgrounds: Light gray (#F9FAFB) for page, white (#FFFFFF) for cards
+  - Text hierarchy: Dark gray (#111827) for headings, medium gray (#6B7280) for secondary text
+  - Error states: Red (#EF4444) for errors and destructive actions
+  - Success states: Green (#10B981) for success messages
+
+#### Scenario: Typography
+- **WHEN** user views content
+- **THEN** text SHALL use:
+  - Clear font hierarchy with appropriate sizes (24-32px for headings, 16px for body)
+  - Sufficient line height for readability (1.5-1.75)
+  - Proper font weights (bold for headings, regular for body)
+
+#### Scenario: Spacing and Layout
+- **WHEN** user views the interface
+- **THEN** elements SHALL have:
+  - Consistent spacing using 4px or 8px grid system
+  - Maximum content width of 1024px centered on large screens
+  - Adequate padding (16-24px) around content areas
+  - Proper margins between sections (32-48px)
+
+#### Scenario: Interactive Elements
+- **WHEN** user hovers over buttons or interactive elements
+- **THEN** elements SHALL show:
+  - Smooth color transitions (200-300ms)
+  - Subtle scale or shadow changes on hover
+  - Clear visual feedback for clickable elements
+
+#### Scenario: Card Design
+- **WHEN** user views contact list items
+- **THEN** each contact SHALL be displayed in a card with:
+  - White background with subtle shadow (shadow-sm or shadow-md)
+  - Rounded corners (8-12px border radius)
+  - Hover effect (slight shadow increase or background color change)
+  - Clear separation between items
+
+#### Scenario: Modal Design
+- **WHEN** user opens a modal
+- **THEN** the modal SHALL have:
+  - Backdrop overlay with blur effect (backdrop-blur-sm)
+  - Centered positioning with smooth fade-in animation
+  - Rounded corners (12-16px)
+  - Maximum width of 512px on desktop
+  - Proper z-index to appear above all content
+
+#### Scenario: Form Inputs
+- **WHEN** user interacts with form fields
+- **THEN** inputs SHALL have:
+  - Clear borders with rounded corners (6-8px)
+  - Focus states with ring/outline (2px blue ring)
+  - Error states with red border and error message styling
+  - Proper label positioning and spacing
+
+#### Scenario: Responsive Design
+- **WHEN** user views on mobile device (< 768px)
+- **THEN** the interface SHALL:
+  - Stack elements vertically
+  - Use full width with padding (16px margins)
+  - Adjust font sizes appropriately
+  - Ensure buttons are easily tappable (min 44px height)
+
+#### Scenario: Loading States
+- **WHEN** data is loading
+- **THEN** loading indicators SHALL:
+  - Use smooth spinning animation
+  - Be centered and clearly visible
+  - Match the primary color scheme
+  - Include descriptive text ("Loading contacts...")
+
+#### Scenario: Empty States
+- **WHEN** no data is available
+- **THEN** empty states SHALL:
+  - Use muted gray text color
+  - Be centered with adequate spacing
+  - Include helpful messaging
+  - Optionally include icons or illustrations
+

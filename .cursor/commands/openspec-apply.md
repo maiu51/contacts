@@ -4,6 +4,11 @@ id: openspec-apply
 category: OpenSpec
 description: Implement an approved OpenSpec change and keep tasks in sync.
 ---
+
+<ChangeId>
+$ARGUMENTS
+</ChangeId>
+
 <!-- OPENSPEC:START -->
 **Guardrails**
 - Favor straightforward, minimal implementations first and add complexity only when it is requested or clearly required.
@@ -12,11 +17,16 @@ description: Implement an approved OpenSpec change and keep tasks in sync.
 
 **Steps**
 Track these steps as TODOs and complete them one by one.
-1. Read `changes/<id>/proposal.md`, `design.md` (if present), and `tasks.md` to confirm scope and acceptance criteria.
-2. Work through tasks sequentially, keeping edits minimal and focused on the requested change.
-3. Confirm completion before updating statuses—make sure every item in `tasks.md` is finished.
-4. Update the checklist after all work is done so each task is marked `- [x]` and reflects reality.
-5. Reference `openspec list` or `openspec show <item>` when additional context is required.
+1. Determine the change ID to implement:
+   - If this prompt includes a specific change ID inside the `<ChangeId>` block above (populated by slash-command arguments), use that value after trimming whitespace.
+   - If the conversation references a change loosely (by title or summary), run `openspec list` to surface likely IDs, share the relevant candidates, and confirm which one the user intends.
+   - Otherwise, review the conversation, run `openspec list`, and ask the user which change to implement; wait for a confirmed change ID before proceeding.
+   - If you still cannot identify a single change ID, stop and tell the user you cannot proceed without a change ID.
+2. Read `changes/<id>/proposal.md`, `design.md` (if present), and `tasks.md` to confirm scope and acceptance criteria.
+3. Work through tasks sequentially, keeping edits minimal and focused on the requested change.
+4. Confirm completion before updating statuses—make sure every item in `tasks.md` is finished.
+5. Update the checklist after all work is done so each task is marked `- [x]` and reflects reality.
+6. Reference `openspec list` or `openspec show <item>` when additional context is required.
 
 **Reference**
 - Use `openspec show <id> --json --deltas-only` if you need additional context from the proposal while implementing.

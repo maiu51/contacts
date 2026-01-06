@@ -25,12 +25,12 @@ contacts/
 │       ├── components/
 │       ├── services/    # API client (fetch wrappers)
 │       └── types/
-├── api/           # Backend (Express)
-│   └── src/
-│       ├── routes/      # Route handlers + Prisma calls
-│       └── middleware/  # Error handling, CORS
-└── prisma/        # DB schema + migrations
-    └── schema.prisma
+└── api/           # Backend (Express)
+    ├── src/
+    │   ├── routes/      # Route handlers + Prisma calls
+    │   └── middleware/  # Error handling, CORS
+    └── prisma/          # DB schema + migrations
+        └── schema.prisma
 ```
 
 ## Domain Context
@@ -71,7 +71,7 @@ Base: `/api`
 - Searches across: `name`, `phone`, `email`
 - Case-insensitive, partial matching
 - Empty query returns all contacts
-- Use Prisma `OR` + `contains` (no external library needed)
+- Implementation: Use Prisma `$queryRaw` with SQLite's `LIKE` operator (case-insensitive by default). Example: `WHERE (name LIKE ? OR phone LIKE ? OR email LIKE ?)` with `%${term}%` bindings. Note: Prisma's `contains` filter is case-sensitive on SQLite, so raw SQL with `LIKE` is required for case-insensitive search.
 
 ## Development Setup
 

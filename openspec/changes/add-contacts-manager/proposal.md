@@ -12,5 +12,5 @@ Build a minimal full-stack contacts management application to demonstrate Fronte
 
 ## Impact
 - Affected specs: `api`, `ui` (new capabilities)
-- New project structure: `web/` (frontend), `api/` (backend), `prisma/` (database)
+- New project structure: `web/` (frontend), `api/` (backend with `prisma/` subdirectory for database)
 

@@ -4,6 +4,11 @@ id: openspec-archive
 category: OpenSpec
 description: Archive a deployed OpenSpec change and update specs.
 ---
+
+<ChangeId>
+$ARGUMENTS
+</ChangeId>
+
 <!-- OPENSPEC:START -->
 **Guardrails**
 - Favor straightforward, minimal implementations first and add complexity only when it is requested or clearly required.
@@ -12,7 +17,7 @@ description: Archive a deployed OpenSpec change and update specs.
 
 **Steps**
 1. Determine the change ID to archive:
-   - If this prompt already includes a specific change ID (for example inside a `<ChangeId>` block populated by slash-command arguments), use that value after trimming whitespace.
+   - If this prompt includes a specific change ID inside the `<ChangeId>` block above (populated by slash-command arguments), use that value after trimming whitespace.
    - If the conversation references a change loosely (for example by title or summary), run `openspec list` to surface likely IDs, share the relevant candidates, and confirm which one the user intends.
    - Otherwise, review the conversation, run `openspec list`, and ask the user which change to archive; wait for a confirmed change ID before proceeding.
    - If you still cannot identify a single change ID, stop and tell the user you cannot archive anything yet.

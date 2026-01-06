@@ -63,6 +63,10 @@ The system SHALL provide PUT /api/contacts/:id to update an existing contact.
 - **THEN** contact SHALL be updated and returned with status 200
 - **AND** response body SHALL contain the updated contact with all fields including updatedAt timestamp
 
+#### Scenario: Validation error
+- **WHEN** PUT /api/contacts/:id with missing name or phone
+- **THEN** error response SHALL be returned with status 400
+
 #### Scenario: Contact not found
 - **WHEN** PUT /api/contacts/:id with non-existent id
 - **THEN** error response SHALL be returned with status 404

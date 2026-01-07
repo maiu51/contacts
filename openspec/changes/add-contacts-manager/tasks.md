@@ -72,16 +72,16 @@
 - [x] 6.8 Implement list refresh after create/edit operations
 
 ## 7. Frontend Validation & Error Handling
-- [ ] 7.1 Implement client-side validation (name and phone required) before form submit
-- [ ] 7.2 Display inline error messages for validation failures
-- [ ] 7.3 Prevent form submission when validation fails
-- [ ] 7.4 Display server validation errors (400) in modal
-- [ ] 7.5 Keep modal open when validation errors occur
-- [ ] 7.6 Handle network errors (catch and identify network failures)
-- [ ] 7.7 Display network error message in UI (toast/alert/banner)
-- [ ] 7.8 Handle 500 server errors (catch 500 status responses)
-- [ ] 7.9 Display 500 error message in UI (generic error message)
-- [ ] 7.10 Handle 404 on edit (display error, close modal)
+- [x] 7.1 Implement client-side validation (name and phone required) before form submit
+- [x] 7.2 Display inline error messages for validation failures
+- [x] 7.3 Prevent form submission when validation fails
+- [x] 7.4 Display server validation errors (400) in modal
+- [x] 7.5 Keep modal open when validation errors occur
+- [x] 7.6 Handle network errors (catch and identify network failures)
+- [x] 7.7 Display network error message in UI (toast/alert/banner)
+- [x] 7.8 Handle 500 server errors (catch 500 status responses)
+- [x] 7.9 Display 500 error message in UI (generic error message)
+- [x] 7.10 Handle 404 on edit (display error, close modal)
 
 ## 8. Frontend Loading States
 - [ ] 8.1 Show loading indicator when fetching contacts list

@@ -2,8 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { SearchBar } from './components/SearchBar';
 import { ContactList } from './components/ContactList';
 import { ContactModal } from './components/ContactModal';
+import { ErrorBanner } from './components/ErrorBanner';
 import type { Contact, ContactInput } from './types/contact';
-import { getAllContacts, searchContacts, createContact, updateContact, deleteContact } from './services/api';
+import { getAllContacts, searchContacts, createContact, updateContact, deleteContact, ApiError } from './services/api';
 
 type ModalMode = 'create' | 'edit';
 
@@ -16,10 +17,12 @@ function App() {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isSearchEmpty, setIsSearchEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSearch = useCallback(async (query: string) => {
     setSearchQuery(query);
     setIsLoading(true);
+    setErrorMessage(null);
     try {
       const results = query.trim() ? await searchContacts(query) : await getAllContacts();
       setContacts(results);
@@ -30,6 +33,13 @@ function App() {
       }
     } catch (error) {
       console.error('Search error:', error);
+      if (error instanceof ApiError) {
+        if (error.isNetworkError) {
+          setErrorMessage('Network error: Unable to connect to server. Please ensure the API server is running.');
+        } else if (error.statusCode === 500) {
+          setErrorMessage('Server error: Something went wrong on the server. Please try again later.');
+        }
+      }
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +63,7 @@ function App() {
   };
 
   const handleSubmitContact = async (data: ContactInput) => {
+    setErrorMessage(null);
     try {
       if (modalMode === 'create') {
         await createContact(data);
@@ -71,13 +82,22 @@ function App() {
         setIsSearchEmpty(results.length === 0);
       }
     } catch (error) {
-      // Re-throw error so ContactModal can handle it
+      // Handle network and 500 errors at App level
+      if (error instanceof ApiError) {
+        if (error.isNetworkError) {
+          setErrorMessage('Network error: Unable to connect to server. Please ensure the API server is running.');
+        } else if (error.statusCode === 500) {
+          setErrorMessage('Server error: Something went wrong on the server. Please try again later.');
+        }
+      }
+      // Re-throw error so ContactModal can handle validation errors (400) and 404
       throw error;
     }
   };
 
   const handleDeleteContact = async (contact: Contact) => {
     if (window.confirm(`Are you sure you want to delete ${contact.name}?`)) {
+      setErrorMessage(null);
       try {
         console.log('🔴 [DELETE] Deleting contact:', contact.id);
         await deleteContact(contact.id);
@@ -93,7 +113,17 @@ function App() {
         }
       } catch (error: any) {
         console.error('🔴 [DELETE] Error:', error);
-        alert(`Failed to delete contact: ${error.message || 'Unknown error'}`);
+        if (error instanceof ApiError) {
+          if (error.isNetworkError) {
+            setErrorMessage('Network error: Unable to connect to server. Please ensure the API server is running.');
+          } else if (error.statusCode === 500) {
+            setErrorMessage('Server error: Something went wrong on the server. Please try again later.');
+          } else {
+            alert(`Failed to delete contact: ${error.message || 'Unknown error'}`);
+          }
+        } else {
+          alert(`Failed to delete contact: ${error.message || 'Unknown error'}`);
+        }
       }
     }
   };
@@ -103,6 +133,7 @@ function App() {
     let isMounted = true;
     const loadContacts = async () => {
       setIsLoading(true);
+      setErrorMessage(null);
       try {
         console.log('📥 [LOAD] Loading initial contacts...');
         const results = await getAllContacts();
@@ -113,6 +144,13 @@ function App() {
         }
       } catch (error) {
         console.error('📥 [LOAD] Error:', error);
+        if (isMounted && error instanceof ApiError) {
+          if (error.isNetworkError) {
+            setErrorMessage('Network error: Unable to connect to server. Please ensure the API server is running.');
+          } else if (error.statusCode === 500) {
+            setErrorMessage('Server error: Something went wrong on the server. Please try again later.');
+          }
+        }
       } finally {
         if (isMounted) {
           setIsLoading(false);
@@ -130,6 +168,10 @@ function App() {
     <div className="min-h-screen bg-gray-50 py-8 sm:py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-10 leading-tight">Contacts Manager</h1>
+        
+        {errorMessage && (
+          <ErrorBanner message={errorMessage} onClose={() => setErrorMessage(null)} />
+        )}
         
         <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between sm:items-center">
           <div className="flex-1 sm:mr-4">

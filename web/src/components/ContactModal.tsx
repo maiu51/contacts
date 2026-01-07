@@ -73,10 +73,21 @@ export function ContactModal({
       onClose();
     } catch (error: any) {
       console.error('Contact submission error:', error);
+      // Handle 404 on edit: display error and close modal
+      if (error.statusCode === 404 && mode === 'edit') {
+        alert(`Contact not found: ${error.message || 'The contact you are trying to edit no longer exists.'}`);
+        onClose();
+        return;
+      }
+      // Handle 400 validation errors: display in modal and keep modal open
       if (error.statusCode === 400) {
         setServerError(error.message || 'Validation error');
       } else if (error.isNetworkError) {
+        // Network errors are handled at App level, but also show in modal
         setServerError(error.message || 'Network error: Unable to connect to server. Please ensure the API server is running.');
+      } else if (error.statusCode === 500) {
+        // 500 errors are handled at App level, but also show in modal
+        setServerError(error.message || 'Server error: Something went wrong on the server. Please try again later.');
       } else {
         setServerError(error.message || 'An error occurred');
       }
